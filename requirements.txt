@@ -3,3 +3,4 @@ pymorphy2
 fastapi
 uvicorn
 igraph
+python-multipart
