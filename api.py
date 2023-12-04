@@ -23,7 +23,7 @@ app.add_middleware(
 
 nltk.download("punkt")
 morph = pymorphy2.MorphAnalyzer()
-onto: Onto
+onto: Onto = None
 documents = []
 scribed_documents = []
 
