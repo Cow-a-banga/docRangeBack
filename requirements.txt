@@ -1,0 +1,5 @@
+nltk
+pymorphy2
+fastapi
+uvicorn
+igraph
