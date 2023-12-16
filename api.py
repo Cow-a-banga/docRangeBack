@@ -28,7 +28,7 @@ documents = []
 scribed_documents = []
 
 @app.get("/clear")
-async def root():
+async def clear():
     global documents
     global scribed_documents
     documents = []
@@ -36,13 +36,13 @@ async def root():
     return {"success": True}
 
 @app.get("/scribe")
-async def root():
+async def scribe(useBase: bool):
     global scribed_documents
-    scribed_documents = scribe_documents(onto, morph, documents)
+    scribed_documents = scribe_documents(onto, morph, documents, useBase)
     return scribed_documents
 
 @app.get("/range")
-async def root(beta: float, distance: float):
+async def range(beta: float, distance: float):
     return range_docs(beta, distance, scribed_documents, onto)
 
 @app.post("/upload/ontology")
