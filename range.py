@@ -30,6 +30,9 @@ def map_concepts(doc, beta, distance, graph: Graph, onto: Onto, converter: Dict)
     bj = dict()
     for i in range(len(concepts)):
         for j in range(len(concepts)):
+            if i == j:
+                continue
+
             concept1 = onto.get_nodes_by_name(concepts[i])[0]
             name1 = concept1["name"]
             concept2 = onto.get_nodes_by_name(concepts[j])[0]
@@ -71,16 +74,14 @@ def map_concepts(doc, beta, distance, graph: Graph, onto: Onto, converter: Dict)
         if pair["concept2"] not in bj_calc:
             bj_calc[pair["concept2"]] = len(list(filter(lambda x: x >= beta, bj[pair["concept2"]])))
         pair["bj"] = bj_calc[pair["concept2"]]
-
-    Ub = sum([bi_calc[key] for key in bi_calc]) / float(len(concepts)) if float(len(concepts)) != 0 else 0
+        pair["Ub"] = (pair["bi"] + pair["bj"]) / float(len(concepts)) if len(concepts) != 0 else 0
 
     for pair in pairs:
-        pair["Ub"] = Ub
         s = pair["bi"] + pair["bj"]
         if s == 0:
             pair["S"] = 0
         else:
-            pair["S"] = math.sqrt(pair["P"]) * 2 * Ub * pair["E"] / s
+            pair["S"] = math.sqrt(pair["P"]) * 2 * pair["Ub"] * pair["E"] / s
 
     all_s = list(map(lambda x: x["S"], pairs))
     min_s = min(all_s)
