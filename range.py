@@ -84,8 +84,8 @@ def map_concepts(doc, beta, distance, graph: Graph, onto: Onto, converter: Dict)
             pair["S"] = math.sqrt(pair["P"]) * 2 * pair["Ub"] * pair["E"] / s
 
     all_s = list(map(lambda x: x["S"], pairs))
-    min_s = min(all_s)
-    max_s = max(all_s)
+    min_s = min(all_s) if len(all_s) > 0 else 0
+    max_s = max(all_s) if len(all_s) > 0 else 0
 
     for pair in pairs:
         pair["S_norm"] = (pair["S"] - min_s) / max_s if max_s != 0 else 0
